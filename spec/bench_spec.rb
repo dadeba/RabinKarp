@@ -11,6 +11,7 @@ describe RabinKarp do
       'regexp' => path("../re.log"),
       'strcmp' => path("../sc.log"),
       'strcmp2' => path("../sc2.log"),
+      'rk_c++' => path("../rk_cpp.log"),
     }
 
     def bench(pattern, file)
@@ -39,6 +40,10 @@ describe RabinKarp do
         system("python lib/rk.py #{pattern} #{file} > #{LOGS['rk_py']}")
       end
 
+      def run_rk_cpp(pattern, file)
+        system("g++ -O3 lib/rk.cpp -lm; ./a.out #{pattern} #{file} > #{LOGS['rk_c++']}")
+      end
+
       def run_regexp(pattern, file)
         pattern = /#{pattern}/
         run_ruby(file, LOGS['regexp']) {|line| line =~ pattern }
@@ -58,6 +63,7 @@ describe RabinKarp do
         report("grep")        { run_grep(pattern, file) }
         report("RabinKarp")   { run_rk(pattern, file) }
         report("RabinKarp(python)")  { run_rk_py(pattern, file) }
+        report("RK C++")      { run_rk_cpp(pattern, file) }
         report("Ruby#regexp") { run_regexp(pattern, file) }
         report("Strcmp")      { run_strcmp(pattern, file) }
         report("Strcmp2")     { run_strcmp2(pattern, file) }
