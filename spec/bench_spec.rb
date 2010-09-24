@@ -7,6 +7,7 @@ describe RabinKarp do
     LOGS = {
       'grep'   => path("../gr.log"),
       'rk'     => path("../rk.log"),
+      'rk_py'  => path("../rk_py.log"),
       'regexp' => path("../re.log"),
       'strcmp' => path("../sc.log"),
       'strcmp2' => path("../sc2.log"),
@@ -33,6 +34,11 @@ describe RabinKarp do
         run_ruby(file, LOGS['rk']) {|line| matcher.run(line) }
       end
 
+      def run_rk_py(pattern, file)
+        # XXX: hardcoded the script path
+        system("python lib/rk.py #{pattern} #{file} > #{LOGS['rk_py']}")
+      end
+
       def run_regexp(pattern, file)
         pattern = /#{pattern}/
         run_ruby(file, LOGS['regexp']) {|line| line =~ pattern }
@@ -51,6 +57,7 @@ describe RabinKarp do
       RBench.run(1) {
         report("grep")        { run_grep(pattern, file) }
         report("RabinKarp")   { run_rk(pattern, file) }
+        report("RabinKarp(python)")  { run_rk_py(pattern, file) }
         report("Ruby#regexp") { run_regexp(pattern, file) }
         report("Strcmp")      { run_strcmp(pattern, file) }
         report("Strcmp2")     { run_strcmp2(pattern, file) }
