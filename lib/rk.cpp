@@ -23,6 +23,11 @@ class RK {
     return h;
   }
 
+  uint64_t newhash(uint64_t h, char s0, char si)
+  {
+    return ALPHA*(h - s0*a[0]) + si;
+  }
+
   uint64_t strcmp(const char *p) {
     uint64_t res = 0;
     for(uint64_t i = 0; i < m; i++) {
@@ -45,8 +50,7 @@ class RK {
 	  return i;
 	}
       }
-      //      h = ALPHA*(h - text[i]*a[0]) + text[i+1];
-      h= hash(&text[i+1]);
+      h= newhash(h, text[i], text[i+m]);
     }
     
     return -1;
@@ -82,5 +86,7 @@ int main(int narg, char *argv[])
     } 
   }
   fclose(fp);
+
+  return 1;
 }
 
