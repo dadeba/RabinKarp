@@ -41,7 +41,7 @@ describe RabinKarp do
       end
 
       def run_rk_cpp(pattern, file)
-        system("g++ -O3 lib/rk.cpp -lm; ./a.out #{pattern} #{file} > #{LOGS['rk_c++']}")
+        system("g++ -O2 lib/rk.cpp -lm; ./a.out #{pattern} #{file} > #{LOGS['rk_c++']}")
       end
 
       def run_regexp(pattern, file)
@@ -66,7 +66,7 @@ describe RabinKarp do
         report("RK C++")      { run_rk_cpp(pattern, file) }
         report("Ruby#regexp") { run_regexp(pattern, file) }
         report("Strcmp")      { run_strcmp(pattern, file) }
-        report("Strcmp2")     { run_strcmp2(pattern, file) }
+#        report("Strcmp2")     { run_strcmp2(pattern, file) }
       }
     end
 

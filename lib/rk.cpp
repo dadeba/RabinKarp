@@ -23,7 +23,7 @@ class RK {
     return h;
   }
 
-  int strcmp(const char *p) {
+  uint64_t strcmp(const char *p) {
     uint64_t res = 0;
     for(uint64_t i = 0; i < m; i++) {
       res += s[i] ^ p[i];
@@ -35,9 +35,8 @@ class RK {
   {
     unsigned int n = strlen(text);
     uint64_t h;
-    char tmp[1024];
 
-    if (n < m) return 0;
+    if (n < m) return -1;
 
     h = hash(&text[0]);
     for(uint64_t i = 0; i < n-m; i++) {
@@ -46,11 +45,11 @@ class RK {
 	  return i;
 	}
       }
-      h = ALPHA*(h - text[i]*a[0]) + text[i+1];
-      //      h= hash(&text[i+1]);
+      //      h = ALPHA*(h - text[i]*a[0]) + text[i+1];
+      h= hash(&text[i+1]);
     }
     
-    return 0;
+    return -1;
   }
   
  private:
@@ -78,7 +77,7 @@ int main(int narg, char *argv[])
 
   matcher = new RK(pattern);
   while(fgets(buf, 1000, fp) != NULL) {
-    if (matcher->run(buf)) {
+    if (matcher->run(buf) >= 0) {
       std::cout << buf;
     } 
   }
