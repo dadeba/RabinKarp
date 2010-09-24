@@ -36,7 +36,8 @@ class RabinKarp(object):
 if __name__ == '__main__':
   import sys
   if len(sys.argv) != 3:
-    "usage: python rk.py <pattern> <filename>"
+    print "usage: python rk.py <pattern> <filename>"
+    exit()
   pattern = sys.argv[1]
   filename = sys.argv[2].encode('utf-8')
   f = open(filename)
