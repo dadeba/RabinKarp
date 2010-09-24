@@ -8,6 +8,7 @@ describe RabinKarp do
       'grep'   => path("../gr.log"),
       'rk'     => path("../rk.log"),
       'regexp' => path("../re.log"),
+      'strcmp' => path("../sc.log"),
     }
 
     def bench(pattern, file)
@@ -36,10 +37,16 @@ describe RabinKarp do
         run_ruby(file, LOGS['regexp']) {|line| line =~ pattern }
       end
 
+      def run_strcmp(pattern, file)
+        matcher = Strcmp.new(pattern)
+        run_ruby(file, LOGS['strcmp']) {|line| matcher.run(line) }
+      end
+
       RBench.run(1) {
         report("grep")        { run_grep(pattern, file) }
         report("RabinKarp")   { run_rk(pattern, file) }
         report("Ruby#regexp") { run_regexp(pattern, file) }
+        report("Strcmp")      { run_strcmp(pattern, file) }
       }
     end
 
