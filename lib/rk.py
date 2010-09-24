@@ -26,7 +26,7 @@ class RabinKarp(object):
       return None
     m = self.m
     h = self._hash(text[0:m])
-    for i in xrange(0, (n-m)+1):
+    for i in xrange(0, (n-m)):
       if h == self.hsub: 
         if self.s == text[i:(i+m)]:
           return i
@@ -40,7 +40,8 @@ if __name__ == '__main__':
     exit()
   pattern = sys.argv[1]
   filename = sys.argv[2].encode('utf-8')
-  f = open(filename)
-  text_all = f.read() # XXX:brutal
   rk = RabinKarp(pattern)
-  print rk.run(text_all)
+  for line in open(filename):
+    position = rk.run(line)
+    if position is not None:
+      print line,
