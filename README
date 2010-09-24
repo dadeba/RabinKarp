@@ -1,0 +1,7 @@
+test
+====
+
+  Install gems first.
+
+    gem install spec rbench
+

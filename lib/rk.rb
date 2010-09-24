@@ -44,12 +44,4 @@ class RabinKarp
   end
 end
 
-text = open(ARGV[0],'r').read
-exit if text == nil
-
-matcher = RabinKarp.new(ARGV[1])
-text.split("\n").each { |line|
-  puts line if matcher.run(line+"\n")
-}
-
 # each
