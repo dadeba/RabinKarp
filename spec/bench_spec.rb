@@ -5,18 +5,22 @@ require File.join(File.dirname(__FILE__), '/spec_helper')
 describe RabinKarp do
   describe "(performance test)" do
     LOGS = {
-      'grep'   => path("../gr.log"),
-      'rk'     => path("../rk.log"),
-      'rk_py'  => path("../rk_py.log"),
-      'regexp' => path("../re.log"),
-      'strcmp' => path("../sc.log"),
-      'strcmp2' => path("../sc2.log"),
-      'rk_c++' => path("../rk_cpp.log"),
+      'grep'    => path("../gr.log"),
+      'rk'      => path("../rk.log"),
+      'rk_py'   => path("../rk_py.log"),
+      'regexp'  => path("../re.log"),
+      'strcmp'  => path("../sc.log"),
+#      'strcmp2' => path("../sc2.log"),
+      'rk_c++'  => path("../rk_cpp.log"),
     }
+
+    before do
+      Dir.glob(path("../*.log")).each{|i| Pathname(i).unlink}
+    end
 
     def bench(pattern, file)
       def run_grep(pattern, file)
-        system("grep #{pattern} #{file} > #{LOGS['grep']}")
+        system("grep '#{pattern}' #{file} > #{LOGS['grep']}")
       end
 
       def run_ruby(file, log, &match)
@@ -61,16 +65,16 @@ describe RabinKarp do
 
       RBench.run(1) {
         report("grep")        { run_grep(pattern, file) }
-        report("RabinKarp")   { run_rk(pattern, file) }
-        report("RabinKarp(python)")  { run_rk_py(pattern, file) }
+        report("RK(Ruby)")    { run_rk(pattern, file) }
+        report("RK(Python)")  { run_rk_py(pattern, file) }
         report("Ruby#regexp") { run_regexp(pattern, file) }
         report("Strcmp")      { run_strcmp(pattern, file) }
-        report("Strcmp2")     { run_strcmp2(pattern, file) }
-        report("RK C++")      { run_rk_cpp(pattern, file) }
+#        report("Strcmp2")     { run_strcmp2(pattern, file) }
+        report("RK(C++)")     { run_rk_cpp(pattern, file) }
       }
     end
 
-    patterns = %w( each while end )
+    patterns = %w( each non-matched-string )
 #    data = path("../../lib/rk.rb")
     data = path("data.txt")
 
