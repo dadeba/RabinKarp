@@ -1,5 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
+# If you have psyco, you can use these two lines.
+#import psyco 
+#psyco.full() 
+
 class RabinKarp(object):
   ALPHA = 101  # could be any number
 
