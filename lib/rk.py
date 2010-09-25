@@ -6,15 +6,13 @@ class RabinKarp(object):
   def __init__(self, searchstring):
     self.s = searchstring
     self.m = len(self.s)
-    self.a = []
-    for i in xrange(0, self.m):
-      self.a.append(RabinKarp.ALPHA ** (self.m - (i + 1)))
+    self.a = [RabinKarp.ALPHA ** (self.m - (i + 1)) for i in xrange(0, self.m)]
     self.hsub = self._hash(self.s)
 
   def _hash(self, s):
     h = 0
     for i in xrange(0, self.m):
-      h = h + ord(s[i]) * self.a[i]
+      h += ord(s[i]) * self.a[i]
     return h
 
   def newhash(self, h, s0, si):
@@ -27,9 +25,8 @@ class RabinKarp(object):
     m = self.m
     h = self._hash(text[0:m])
     for i in xrange(0, (n-m)):
-      if h == self.hsub: 
-        if self.s == text[i:(i+m)]:
-          return i
+      if h == self.hsub and self.s == text[i:(i+m)]:
+        return i
       h = self.newhash(h, text[i], text[i+m])
     return None 
 
