@@ -1,7 +1,48 @@
-test
+Setup
+=====
+
+  Install following gems first.
+
+    % gem install rspec rbench
+
+
+Benchmark
+=========
+
+    % rake spec
+
+
+Data
 ====
 
-  Install gems first.
+  First, put some data file(utf-8) into data directory as "data.u8".
 
-    gem install spec rbench
+    % mkdir data/
+    % cp <some_dir>/file data/data.u8
 
+  Convert the data file to utf-32. (needs "iconv(1)")
+
+    % rake data
+
+  This creates following files.
+
+    data : "data/data.u32"
+    index: "data/data.idx"
+
+
+Format
+======
+  * data (data/data.u32)
+
+    UTF-32 text file (little endian with BOM(FF FE 00 00))
+    where each lines are splited by CRLF(0A 00 00 00)
+
+  * index (data/data.idx)
+
+    ASCII text file (CRLF)
+    that stores line offset information for above data file.
+
+    (example)
+       4
+       20
+       32
