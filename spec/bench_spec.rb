@@ -45,7 +45,7 @@ describe RabinKarp do
       end
 
       def run_rk_cpp(pattern, file)
-        system("g++ -O4 lib/rk.cpp -lm; ./a.out #{pattern} #{file} > #{LOGS['rk_c++']}")
+        system("g++ -O4 -Ilib lib/rk.cpp -lm; ./a.out #{pattern} #{file} > #{LOGS['rk_c++']}")
       end
 
       def run_regexp(pattern, file)

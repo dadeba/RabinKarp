@@ -29,7 +29,6 @@ Data
     data : "data/data.u32"
     index: "data/data.idx"
 
-
 Format
 ======
   * data (data/data.u32)
@@ -46,3 +45,18 @@ Format
        4
        20
        32
+
+
+Test UTF-32 match
+==============
+
+  After creating data.u32 and data.idx, compile the program and execute it.
+
+    % g++ -Wall -I lib/rk_u32.cpp
+    % ./a.out word
+ 
+  The program prints a number of match and writes "result" that contains
+  the matched lines. We assume the search word is EUC-JP and "result" is  
+  in UTF-32. To check the result, use a command like this:
+
+    % iconv -f utf32 -t euc-jp result | lv    
